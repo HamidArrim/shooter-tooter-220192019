@@ -568,7 +568,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sp
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
     level = 2
     Spawning = 0
-    game.splash("Level 2: kill 25 monsters")
+    game.splash("Level 2: kill 30 monsters")
 })
 sprites.onOverlap(SpriteKind.Boss, SpriteKind.Player, function (sprite, otherSprite) {
     info.changeLifeBy(-2)
@@ -798,13 +798,6 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
     sprites.destroy(sprite)
     Boss_life += -1
-})
-info.onScore(15, function () {
-    game.splash("A door has been opened.")
-    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
-    tiles.setCurrentTilemap(tilemap`level_0_finished`)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-    Spawning = 1
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     player_direction = 2
@@ -1390,12 +1383,19 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
         }
     }
 })
-info.onScore(40, function () {
+info.onScore(50, function () {
     game.splash("You hear a weird sound...")
     for (let index = 0; index < 3; index++) {
         music.play(music.createSoundEffect(WaveShape.Noise, 3300, 1400, 255, 0, 150, SoundExpressionEffect.Warble, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
     }
     tiles.setCurrentTilemap(tilemap`level_2_finished`)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    Spawning = 1
+})
+info.onScore(20, function () {
+    game.splash("A door has been opened.")
+    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
+    tiles.setCurrentTilemap(tilemap`level_0_finished`)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     Spawning = 1
 })
@@ -1563,7 +1563,7 @@ tiles.placeOnRandomTile(mySprite, sprites.dungeon.floorLight3)
 scene.cameraFollowSprite(mySprite)
 info.setLife(5)
 mySprite.setStayInScreen(true)
-game.splash("Level 1: kill 15 monsters", "")
+game.splash("Level 1: kill 20 monsters")
 forever(function () {
     if (Boss_life == 0) {
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
